@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathePhysics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a3a52;
+            --secondary-color: #2c5aa0;
+            --accent-color: #d4a574;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            color: #333;
+            background-color: var(--light-bg);
+        }
+
+        /* Navigation */
+        nav {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        nav .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-color) !important;
+            letter-spacing: 1px;
+        }
+
+        nav .nav-link {
+            color: white !important;
+            margin: 0 1rem;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+
+        nav .nav-link.active {
+            color: var(--accent-color) !important;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Header Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .content-section {
+            background-color: white;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .content-section h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .highlight-box {
+            background-color: #f0f4f8;
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 4px;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin: 1.5rem 0;
+            line-height: 1.8;
+        }
+
+        .sanskrit {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .contact-section {
+            background-color: #f0f4f8;
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .contact-section a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .contact-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* Eligibility Requirements */
+        .requirement {
+            background-color: white;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .requirement h4 {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirement p {
+            margin: 0;
+            color: #666;
+        }
+
+        /* Category Sections */
+        .category-section {
+            margin-bottom: 4rem;
+        }
+
+        .category-header {
+            border-left: 5px solid;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .category-header h2 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-icon {
+            font-size: 2.2rem;
+        }
+
+        .category-description {
+            margin: 0;
+            color: #666;
+            font-size: 1.05rem;
+            font-style: italic;
+        }
+
+        /* People/Members Cards */
+        .people-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .member-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .member-card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .member-card-header h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .member-role {
+            color: var(--accent-color);
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        .member-card-body {
+            padding: 1.5rem;
+        }
+
+        .member-field {
+            margin-bottom: 1rem;
+        }
+
+        .member-field-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .member-field-value {
+            color: #555;
+            margin-top: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .member-field-value a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .member-field-value a:hover {
+            text-decoration: underline;
+        }
+
+        .member-field-link {
+            display: inline-block !important;
+            text-decoration: none !important;
+            color: var(--primary-color) !important;
+        }
+
+        .member-field-link:hover {
+            text-decoration: underline !important;
+            color: var(--secondary-color) !important;
+        }
+
+        .member-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background-color: #e8f4f8;
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .member-status.current {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .member-status.alumni {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .member-interests {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .interest-tag {
+            background-color: #f0f4f8;
+            color: var(--secondary-color);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            border: 1px solid var(--secondary-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            nav .nav-link {
+                margin: 0.5rem 0;
+                font-size: 1rem;
+            }
+
+            .content-section {
+                padding: 2rem 1rem;
+            }
+
+            .people-container {
+                grid-template-columns: 1fr;
+            }
+
+            .category-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" onclick="showPage('home')" style="cursor: pointer;">MathePhysics</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showPage('people')">Members</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" onclick="showPage('scholarships')">Parvati Dhan Scholarships</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <!-- Main Content -->
+        <div class="container">
+            <div class="content-section">
+                <p>
+                    MathePhysics is a loosely organised, inter-disciplinary research group led by <strong>Akshunna S. Dogra</strong>, 
+                    focusing on the construction of rigorous theories for "Learning" (Machine and Biological) and the development of 
+                    principled mathematical and computational models in various scientific domains.
+                </p>
+
+                <p>
+                    Our students, contributors, and mentors hail from a rich diversity of backgrounds 
+                    (Albania, Australia, Canada, China, Croatia, Germany, Grenada, India, Pakistan, South Korea, United Kingdom, 
+                    and the United States to date). Better still, they harbor equally diverse intellectual ambitions, pursuing 
+                    expertise in various nooks of mathematics, several corners of physics, and the many labyrinthine mazes of 
+                    machine/deep learning.
+                </p>
+
+                <p>
+                    Formally supervised students have gone on to earn postgraduate positions at institutions such as 
+                    Oxford University and UT Austin and have found employment at reputable financial 
+                    institutions such as Squarepoint Capital and Funding Circle.
+                </p>
+
+                <div class="contact-section">
+                    <div style="text-align: center;">
+                    <p class="sanskrit">धैर्यवतः सर्वं प्रवर्तते।</p>
+                    <p style="font-style: normal !important;">For the steadfast one, all things are set in motion.</p>
+                    <p class="quote" style="margin-bottom: 0;">Everything is a dynamical system if you are brave enough.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PEOPLE/MEMBERS PAGE -->
+    <div id="people" class="page">
+        <!-- Hero Section -->
+
+        <!-- Main Content -->
+        <div class="container">
+            <div class="content-section">
+
+                <div id="peopleContainer">
+                    <!-- Members will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCHOLARSHIPS PAGE -->
+    <div id="scholarships" class="page">
+        <!-- Hero Section -->
+
+        <!-- Main Content -->
+        <div class="container">
+            <div class="content-section">
+                
+                <p>
+                    MathePhysics is honored to facilitate the selection and mentorship of Parvati Dhan Scholars from 2027.
+                </p>
+
+                <p>
+                    Parvati Dhan scholarships are <strong>one time unrestricted grants</strong>, made to young scholars pursuing 
+                    academic work in any field of human inquiry. <br>Mrs. Raksha Dogra and her sons have established these grants 
+                    to honor the memory of her parents, <strong>Mrs. Parvati Devi</strong> and <strong>Mr. Dhani Ram</strong>.
+                </p>
+
+                <h3>Selection Process</h3>
+                <p>
+                    The scholars will be selected <strong>once per year</strong> from a pool of nominations made by MathePhysics alumni, 
+                    members, and affiliates, who will each be allowed <strong>up to 1 nomination per year</strong>. The selections will  
+                    be made by a jury of respected academics assembled by MathePhysics (typically excluding its PIs/Leaders). 
+                    Nominee CV and details may be forwarded to Akshunna S. Dogra by the annual deadline of <strong>December 31</strong>.
+                </p>
+
+                <h3>Award Details</h3>
+                    <p>
+                        <strong>Award Amount:</strong> The number of chosen scholars and the value of their awards will vary each year. 
+                        However, every attempt will be made to award <strong>at least one scholar per year</strong> with an amount equivalent 
+                        to the World Bank's GNI per capita cutoff for low income countries (<strong>currently $1,135/year</strong>).
+                    </p>
+                    <p>
+                        The long term goal is to support <strong>3-5 awards per year</strong>, 
+                        alongside any mentorship assistance the scholars may need as they plan their lives and careers.
+                    </p>
+                
+                <h3>Eligibility Requirements</h3>
+                <p>The nominees must satisfy the following requirements to be eligible for the scholarships:</p>
+
+                <p><strong>📅 Age:</strong> They must be <strong>younger than 25 years</strong> of age on December 31 of their nomination year.</p>
+
+                <p><strong>🌍 Nationality:</strong> They must be <strong>citizen AND resident</strong> of a low income or lower-middle income country as defined by the 
+                    World Bank.</p>
+
+                <p><strong>🎓 Qualifications:</strong> They will <strong>not hold a Master's degree or higher</strong> academic qualification by December 31 of their 
+                    award year.</p>
+
+                <p><strong>⚖️ Legal/Financial:</strong> They have not been convicted, sanctioned, or otherwise made subject to 
+                    restrictions by the Republic of India.</p>
+                </div>
+            
+                <div class="contact-section">
+                    <h3 style="color: var(--primary-color); margin-top: 0;">Questions?</h3>
+                    <p>
+                        For more information about the Parvati Dhan Scholarships, please contact Akshunna S. Dogra.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2019 MathePhysics. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- PEOPLE DATA & RENDERING -->
+<script>
+    // ============================================
+    // MODULAR PEOPLE DATA - EASY TO EDIT
+    // ============================================
+    const peopleData = [
+        {
+            id: 1,
+            name: "Akshunna S. Dogra",
+            role: "Founder",
+            category: "leader",
+            status: "current",
+            affiliation: "MIT/Harvard University",
+            interests: ["Mathematics", "Physics", "AI/ML", "Neuroscience"],
+            email: "adogra [at] nyu [dot] edu",
+            website: "https://sites.mit.edu/adogra"
+        },
+        {
+            id: 2,
+            name: "Pritipriya Dasbehera",
+            role: "Ph.D. Student",
+            category: "student",
+            status: "current",
+            affiliation: "International Centre for Theoretical Sciences (ICTS-TIFR)",
+            interests: ["Physics"],
+            email: "pritipriya.dasbehera@niser.ac.in",
+            website: "https://pritipriya-dasbehera.github.io/"
+        },
+        {
+            id: 3,
+            name: "Trajan Murphy",
+            role: "Ph.D. Student",
+            category: "student",
+            status: "alumni",
+            affiliation: "Boston University",
+            interests: ["Mathematics"],
+            email: "trajanm@bu.edu",
+            website: "https://www.bu.edu/math/profile/trajan-murphy/"
+        },
+        {
+            id: 4,
+            name: "Jeffrey B. Lai",
+            role: "Ph.D. Student",
+            category: "student",
+            status: "alumni",
+            affiliation: "UT Austin",
+            interests: ["Physics", "AI/ML"],
+            email: "jlai@utexas.edu",
+            website: "https://jbial.github.io/"
+        },
+        {
+            id: 5,
+            name: "Abu-Al Hassan",
+            role: "Master's Student",
+            category: "student",
+            status: "alumni",
+            affiliation: "Imperial College London",
+            interests: ["Mathematics"],
+            email: "abu-al.hassan19@imperial.ac.uk",
+            website: ""
+        },
+        {
+            id: 6,
+            name: "Eddie Prideaux-Ghee",
+            role: "Master's Student",
+            category: "student",
+            status: "alumni",
+            affiliation: "Imperial College London",
+            interests: ["Mathematics"],
+            email: "edward.prideaux-ghee19@imperial.ac.uk",
+            website: ""
+        },
+        {
+            id: 7,
+            name: "Matthew J. H. Wright",
+            role: "Master's Student",
+            category: "student",
+            status: "alumni",
+            affiliation: "Imperial College London",
+            interests: ["Mathematics"],
+            email: "matthew.wright18@imperial.ac.uk",
+            website: ""
+        },
+        {
+            id: 8,
+            name: "Alexander Cushen",
+            role: "Master's Student",
+            category: "student",
+            status: "alumni",
+            affiliation: "Imperial College London",
+            interests: ["Physics"],
+            email: "atcushen@umich.edu",
+            website: "https://clasp.engin.umich.edu/people/cushen-alexander/"
+        },
+        {
+            id: 10,
+            name: "William T. Redman",
+            role: "External PI",
+            category: "affiliate",
+            status: "current",
+            affiliation: "Johns Hopkins University",
+            interests: ["AI/ML", "Neuroscience"],
+            email: "wredman4@jh.edu",
+            website: "https://dynamical-intelligence-group.github.io"
+        },
+        {
+            id: 11,
+            name: "Kristijan Štefanec",
+            role: "Quantitative trader",
+            category: "affiliate",
+            status: "current",
+            affiliation: "Old Mission",
+            interests: ["AI/ML", "Finance"],
+            email: "kristijan.stefanec1@gmail.com",
+            website: "https://uk.linkedin.com/in/kristijan-%C5%A1tefanec-702779177"
+        },
+        {
+            id: 9,
+            name: "Tim Y. J. Wang",
+            role: "Undergraduate Research Intern",
+            category: "student",
+            status: "alumni",
+            affiliation: "Imperial College London",
+            interests: ["Statistics"],
+            email: "tim.wang20@imperial.ac.uk",
+            website: "https://openreview.net/profile?id=~Tim_Y._J._Wang1"
+        },
+        {
+            id: 12,
+            name: "Zhiqi Huang",
+            role: "Undergraduate Research Intern",
+            category: "student",
+            status: "alumni",
+            affiliation: "Imperial College London",
+            interests: ["Mathematics"],
+            website: "https://github.com/Julie3399"
+        },
+        {
+            id: 13,
+            name: "Riyaaz Ray Vachani",
+            role: "Undergraduate Research Intern",
+            category: "student",
+            status: "alumni",
+            affiliation: "New York University",
+            interests: ["Mathematics"],
+            email: "rrv234@nyu.edu",
+            website: "https://appliedmath.arizona.edu/person/riyaaz-ray-vachani"
+        }
+    ];
+
+    // ============================================
+    // CATEGORY CONFIGURATION
+    // ============================================
+    const categoryConfig = {
+        leader: {
+            title: "Leaders",
+            icon: "🎓",
+            color: "#2c5aa0"
+        },
+        student: {
+            title: "Students & Mentees",
+            icon: "🎓",
+            color: "#2c5aa0"
+        },
+        affiliate: {
+            title: "Affiliates",
+            icon: "🤝",
+            color: "#1a3a52"
+        }
+    };
+
+    // ============================================
+    // RENDER PEOPLE DYNAMICALLY BY CATEGORY
+    // ============================================
+    function renderPeople() {
+        const container = document.getElementById('peopleContainer');
+        container.innerHTML = '';
+
+        // Group people by category
+        const grouped = {
+            leader: [],
+            student: [],
+            affiliate: []
+        };
+
+        peopleData.forEach(person => {
+            if (grouped[person.category]) {
+                grouped[person.category].push(person);
+            }
+        });
+
+        // Render each category in order
+        const categoryOrder = ['leader', 'student', 'affiliate'];
+        categoryOrder.forEach(categoryKey => {
+            const people = grouped[categoryKey];
+            if (people.length > 0) {
+                const categorySection = createCategorySection(categoryKey, people);
+                container.appendChild(categorySection);
+            }
+        });
+    }
+
+    function createCategorySection(categoryKey, people) {
+        const section = document.createElement('div');
+        section.className = 'category-section';
+
+        const config = categoryConfig[categoryKey];
+
+        // Sort: current members first, then alumni
+        const sorted = [...people].sort((a, b) => {
+            if (a.status === 'current' && b.status !== 'current') return -1;
+            if (a.status !== 'current' && b.status === 'current') return 1;
+            return 0;
+        });
+
+        // Category header
+        const header = document.createElement('div');
+        header.className = 'category-header';
+        header.style.borderColor = config.color;
+        header.innerHTML = `
+            <h2 style="color: ${config.color};">
+                <span class="category-icon">${config.icon}</span> ${config.title}
+            </h2>
+        `;
+        section.appendChild(header);
+
+        // People container
+        const peopleGrid = document.createElement('div');
+        peopleGrid.className = 'people-container';
+
+        sorted.forEach(person => {
+            const card = createMemberCard(person, config.color);
+            peopleGrid.appendChild(card);
+        });
+
+        section.appendChild(peopleGrid);
+        return section;
+    }
+
+    function createMemberCard(person, categoryColor) {
+        const card = document.createElement('div');
+        card.className = 'member-card';
+
+        const statusClass = person.status === 'current' ? 'current' : 'alumni';
+        const statusText = person.status === 'current' ? 'Current' : 'Alumni';
+
+        let contactHtml = '';
+        if (person.email) {
+            contactHtml += `<div class="member-field"><a href="mailto:${person.email}" class="member-field-label member-field-link">Email</a></div>`;
+        }
+        if (person.website) {
+            contactHtml += `<div class="member-field"><a href="${person.website}" target="_blank" class="member-field-label member-field-link">Website</a></div>`;
+        }
+
+        let interestsHtml = '';
+        if (person.interests && person.interests.length > 0) {
+            interestsHtml = `<div class="member-field">
+                <span class="member-field-label">Research Interests</span>
+                <div class="member-interests">
+                    ${person.interests.map(interest => `<span class="interest-tag">${interest}</span>`).join('')}
+                </div>
+            </div>`;
+        }
+
+        const headerColor = adjustColorBrightness(categoryColor, -20);
+        card.innerHTML = `
+            <div class="member-card-header" style="background: linear-gradient(135deg, ${categoryColor} 0%, ${headerColor} 100%);">
+                <h3>${person.name}</h3>
+                <div class="member-role">${person.role}</div>
+            </div>
+            <div class="member-card-body">
+                <div class="member-field">
+                    <span class="member-field-label">Affiliation</span>
+                    <div class="member-field-value">${person.affiliation}</div>
+                </div>
+                ${interestsHtml}
+                ${contactHtml}
+                <span class="member-status ${statusClass}">${statusText}</span>
+            </div>
+        `;
+
+        return card;
+    }
+
+    // Helper function to adjust color brightness
+    function adjustColorBrightness(color, percent) {
+        const num = parseInt(color.replace("#",""), 16);
+        const amt = Math.round(2.55 * percent);
+        const R = Math.min(255, Math.max(0, (num >> 16) + amt));
+        const G = Math.min(255, Math.max(0, (num >> 8 & 0x00FF) + amt));
+        const B = Math.min(255, Math.max(0, (num & 0x0000FF) + amt));
+        return "#" + (0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1);
+    }
+
+    // ============================================
+    // PAGE NAVIGATION
+    // ============================================
+    function showPage(pageId) {
+        // Hide all pages
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(page => page.classList.remove('active'));
+
+        // Show selected page
+        document.getElementById(pageId).classList.add('active');
+
+        // Render people when people page is shown
+        if (pageId === 'people') {
+            renderPeople();
+        }
+
+        // Update active nav link
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => link.classList.remove('active'));
+        
+        // Find and activate the clicked link
+        event.target.classList.add('active');
+
+        // Close mobile menu if open
+        const navbarCollapse = document.querySelector('.navbar-collapse');
+        if (navbarCollapse.classList.contains('show')) {
+            navbarCollapse.classList.remove('show');
+        }
+    }
+
+    // Initial render when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        renderPeople();
+    });
+</script>
+</body>
+</html>
